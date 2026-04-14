@@ -19,6 +19,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User {
     @Id
+    @GeneratedValue
+    @Column(columnDefinition = "UUID")
     private UUID id;
 
     private String name;
@@ -33,7 +35,12 @@ public class User {
     private List<Project> projects = new ArrayList<>();
 
     public void addProject(Project project){
-        projects.add(project);
+
+        if (this.projects == null) {
+            this.projects = new ArrayList<>();
+        }
+
+        this.projects.add(project);
         project.setUser(this);
     }
 
